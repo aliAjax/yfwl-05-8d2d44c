@@ -1,0 +1,158 @@
+{
+  "gate_tests": [
+    "test_outputs.py::test_recovers_full_nonlinear_case"
+  ],
+  "schema_version": 1,
+  "tests": {
+    "test_outputs.py::test_boolean_length_is_rejected": {
+      "priority": "boundary",
+      "rationale": "`length_m` 的取值范围是 `0.35` 至 `1.40`。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_duplicate_json_key_is_rejected": {
+      "priority": "boundary",
+      "rationale": "摆阵包读不进来、出现重复键、字段集合对不上或值类型不对时，程序以状态码 `3` 退出。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_emits_exact_result_schema": {
+      "priority": "core",
+      "rationale": "成功结果写入 `--output`。；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.1
+    },
+    "test_outputs.py::test_install_failure_preserves_directory_and_ledger": {
+      "priority": "recovery",
+      "rationale": "发布摆阵复原单时，先在目标目录暂存草稿，再一次性换到正式文件名；换名失败则旧复原单与旧流水字节不动。；这验证失败、重跑或恢复不变量，失败会造成旧结果和账本不一致。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_invalid_input_preserves_previous_bytes": {
+      "priority": "recovery",
+      "rationale": "失败不得创建或改写结果文件。；这验证失败、重跑或恢复不变量，失败会造成旧结果和账本不一致。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_ledger_has_exact_keys_and_digests": {
+      "priority": "recovery",
+      "rationale": "每条成功记录一行，字段固定为：；这验证失败、重跑或恢复不变量，失败会造成旧结果和账本不一致。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_malformed_ledger_preserves_output": {
+      "priority": "recovery",
+      "rationale": "失败不得改动账本。；这验证失败、重跑或恢复不变量，失败会造成旧结果和账本不一致。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_new_case_appends_ledger_record": {
+      "priority": "recovery",
+      "rationale": "新的成功结果必须追加一行。；这验证失败、重跑或恢复不变量，失败会造成旧结果和账本不一致。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_recovers_coupling_coefficients": {
+      "priority": "core",
+      "rationale": "耦合系数允许偏差 `0.35`。；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.1
+    },
+    "test_outputs.py::test_recovers_cubic_stiffness": {
+      "priority": "core",
+      "rationale": "cubic stiffness 允许偏差 `0.08`。；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.1
+    },
+    "test_outputs.py::test_recovers_node_damping_values": {
+      "priority": "core",
+      "rationale": "阻尼允许偏差 `8e-4 s^-1`。；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.1
+    },
+    "test_outputs.py::test_recovers_sensor_time_offsets": {
+      "priority": "core",
+      "rationale": "传感器的时基字段 `time_offset_s` 仍取 `-0.08` 至 `0.08` 区间，摆动相位反演后与真值的允许偏差为 `3e-4 s；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.1
+    },
+    "test_outputs.py::test_recovers_terminal_mapping": {
+      "priority": "core",
+      "rationale": "每个端子恰好连接两根不同摆杆；这是任务的主交付路径，失败意味着核心业务结果不可用。",
+      "weight": 0.1
+    },
+    "test_outputs.py::test_rejects_duplicate_node_identifier": {
+      "priority": "boundary",
+      "rationale": "重复摆杆编号会终止整批求解。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_mismatched_trace_segment_id": {
+      "priority": "boundary",
+      "rationale": "同一输入内的段号集合必须与全部端子轨迹逐段一致。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_missing_segment_trace": {
+      "priority": "boundary",
+      "rationale": "每个端子必须恰好包含一段对应每个 `segment_id` 的轨迹。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_nested_sample_extra_key": {
+      "priority": "boundary",
+      "rationale": "采样对象只允许：；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_nonuniform_time_axis": {
+      "priority": "boundary",
+      "rationale": "同一段号在所有端子中的时间轴必须一致。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_nonzero_time_origin": {
+      "priority": "boundary",
+      "rationale": "`time_s` 的首点为 `0.0`；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_sample_count_above_eighty": {
+      "priority": "boundary",
+      "rationale": "每段轨迹有 40 至 80 个样本。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.017
+    },
+    "test_outputs.py::test_rejects_sample_count_below_forty": {
+      "priority": "boundary",
+      "rationale": "每段轨迹有 40 至 80 个样本。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.017
+    },
+    "test_outputs.py::test_rejects_segment_count_not_three": {
+      "priority": "boundary",
+      "rationale": "`excitations` 保存 3 段已知激励。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.017
+    },
+    "test_outputs.py::test_rejects_time_window_above_six": {
+      "priority": "boundary",
+      "rationale": "采样间隔恒定，末点不高于 `6.0 s`。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.017
+    },
+    "test_outputs.py::test_rejects_top_level_extra_key": {
+      "priority": "boundary",
+      "rationale": "试验包的根字段固定为：；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.016
+    },
+    "test_outputs.py::test_rejects_topology_not_four_terminals_eight_nodes": {
+      "priority": "boundary",
+      "rationale": "每个端子恰好连接两根不同摆杆，每根摆杆恰好属于一个端子。；这验证公开边界和拒收口径，失败会产生越界输入或错误放行。",
+      "weight": 0.017
+    },
+    "test_outputs.py::test_rejects_wrong_schema_version": {
+      "priority": "schema",
+      "rationale": "`schema_version` 必须是整数 `1`。；这验证结构或序列化外观，失败会使下游无法稳定消费结果。",
+      "weight": 0.013
+    },
+    "test_outputs.py::test_repeating_same_input_does_not_append": {
+      "priority": "recovery",
+      "rationale": "同一输入重复执行时不得新增或改写账本行。；这验证失败、重跑或恢复不变量，失败会造成旧结果和账本不一致。",
+      "weight": 0.022
+    },
+    "test_outputs.py::test_result_uses_compact_sorted_json": {
+      "priority": "schema",
+      "rationale": "摆阵复原单的字节外观固定：JSON 不带插入空格，键名按升序落盘，文件收口只有一个换行。；这验证结构或序列化外观，失败会使下游无法稳定消费结果。",
+      "weight": 0.013
+    },
+    "test_outputs.py::test_success_path_is_silent": {
+      "priority": "schema",
+      "rationale": "正常扫频结束后，终端的标准输出和标准错误都保持空。；这验证结构或序列化外观，失败会使下游无法稳定消费结果。",
+      "weight": 0.013
+    }
+  },
+  "weight_policy": {
+    "basis": "business_priority",
+    "core_min_share": 0.5,
+    "version": 1
+  }
+}

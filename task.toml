@@ -1,0 +1,27 @@
+schema_version = "1.3"
+
+[task]
+name = "local/pendulum-energy-recovery"
+description = "从聚合能量轨迹反演摆阵参数并恢复端子接线"
+authors = [{ name = "batch-b" }]
+keywords = ["physics", "inverse-problem", "spectral-analysis", "pytest"]
+
+[agent]
+timeout_sec = 3600
+
+[environment]
+build_timeout_sec = 600
+cpus = 1
+memory_mb = 2048
+storage_mb = 10240
+gpus = 0
+allow_internet = true
+
+[verifier]
+timeout_sec = 600
+
+[metadata]
+difficulty = "expert"
+category = "physics-simulation"
+tags = ["spectral-inversion", "inverse-problem", "atomic-write", "energy-analysis"]
+expert_time_estimate = "60m"
