@@ -281,6 +281,38 @@ def test_recovers_terminal_mapping(solved_case: dict):
     assert actual == expected
 
 
+def test_variant_identifiers_cannot_replay_fixed_fixture(tmp_path: Path):
+    """两个不同输入场景必须改变输出绑定，静态回放原夹具不能得分。"""
+    payload = _payload("variant-identifiers")
+    node_ids = {
+        item["node_id"]: f"N{20 - index:02d}"
+        for index, item in enumerate(payload["pendulums"])
+    }
+    for item in payload["pendulums"]:
+        item["node_id"] = node_ids[item["node_id"]]
+    terminal_ids = {
+        item["terminal_id"]: f"X{index + 11:02d}"
+        for index, item in enumerate(payload["terminals"])
+    }
+    for item in payload["terminals"]:
+        item["terminal_id"] = terminal_ids[item["terminal_id"]]
+
+    completed, output_path, _, _ = _invoke(tmp_path, payload)
+    assert completed.returncode == 0
+    result = json.loads(output_path.read_text(encoding="utf-8"))
+    actual = {
+        item["terminal_id"]: item["node_ids"]
+        for item in result["terminal_map"]
+    }
+    expected = {}
+    for index, terminal in enumerate(payload["terminals"]):
+        first, second = _groups(4)[index]
+        expected[terminal["terminal_id"]] = sorted(
+            [node_ids[f"P{first + 1:02d}"], node_ids[f"P{second + 1:02d}"]]
+        )
+    assert actual == expected
+
+
 def test_recovers_sensor_time_offsets(solved_case: dict):
     """题面：「传感器的时基字段 `time_offset_s` 仍取 `-0.08` 至 `0.08` 区间，摆动相位反演后与真值的允许偏差为 `3e-4 s`。」"""
     actual = {

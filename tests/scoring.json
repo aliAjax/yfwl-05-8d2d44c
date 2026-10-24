@@ -1,6 +1,7 @@
 {
   "gate_tests": [
-    "test_outputs.py::test_recovers_full_nonlinear_case"
+    "test_outputs.py::test_recovers_full_nonlinear_case",
+    "test_outputs.py::test_variant_identifiers_cannot_replay_fixed_fixture"
   ],
   "schema_version": 1,
   "tests": {
